@@ -1,20 +1,40 @@
 {
-  "name": "brahian-portfolio",
+  "name": "my-portfolio",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "dependencies": {
-    "vue": "^3.3.11"
+    "@aws-sdk/client-s3": "^3.591.0",
+    "@aws-sdk/s3-request-presigner": "^3.591.0",
+    "@prisma/client": "5.15.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18"
   },
+  "prettier": "prettier-config-standard",
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.5.2",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.8",
-    "vue-tsc": "^1.8.25"
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "prettier": "^3.3.0",
+    "prettier-config-standard": "^7.0.0",
+    "prisma": "^5.15.0",
+    "standard": "^17.1.0",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }

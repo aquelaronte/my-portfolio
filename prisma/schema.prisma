@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Media {
+  id          String       @id @default(cuid())
+  name        String
+  description String
+  key         String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  Technology  Technology[]
+  Project     Project[]
+}
+
+model Project {
+  id                String              @id @default(cuid())
+  name              String
+  description       String
+  url               String
+  mediaId           String
+  media             Media               @relation(fields: [mediaId], references: [id])
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  ProjectTechnology ProjectTechnology[]
+}
+
+model Stack {
+  id        String       @id @default(cuid())
+  name      String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  stack     Technology[]
+}
+
+model ProjectTechnology {
+  id           String     @id @default(cuid())
+  projectId    String
+  project      Project    @relation(fields: [projectId], references: [id])
+  technologyId String
+  technology   Technology @relation(fields: [technologyId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Technology {
+  id                String              @id @default(cuid())
+  rate              Int
+  name              String
+  description       String
+  stackId           String
+  Stack             Stack               @relation(fields: [stackId], references: [id])
+  mediaId           String
+  media             Media               @relation(fields: [mediaId], references: [id])
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  ProjectTechnology ProjectTechnology[]
+}
