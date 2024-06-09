@@ -1,6 +1,7 @@
 import {
   CreateProjectUseCase,
   DeleteProjectUseCase,
+  projectRepository,
   RetrieveAllProjectsUseCase,
   SearchProjectsUseCase,
   UpdateProjectUseCase
@@ -27,12 +28,14 @@ class ProjectDependencies {
   public updateProject = new UpdateProjectUseCase(new UpdateProjectAdapterV1())
 }
 
-export class ProjectPresentation {
+export class ProjectPresentation implements projectRepository {
   private dependencies = new ProjectDependencies()
 
-  public createProject = this.dependencies.createProject.execute
-  public deleteProject = this.dependencies.deleteProject.execute
-  public retrieveAllProjects = this.dependencies.retrieveAllProjects.execute
-  public searchProjects = this.dependencies.searchProjects.execute
-  public updateProject = this.dependencies.updateProject.execute
+  public readonly createProject = this.dependencies.createProject.execute
+  public readonly deleteProject = this.dependencies.deleteProject.execute
+  public readonly retrieveAllProjects =
+    this.dependencies.retrieveAllProjects.execute
+
+  public readonly searchProjects = this.dependencies.searchProjects.execute
+  public readonly updateProject = this.dependencies.updateProject.execute
 }

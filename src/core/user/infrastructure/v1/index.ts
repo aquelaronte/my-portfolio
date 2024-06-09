@@ -1,3 +1,4 @@
+export * from './decode-token'
 export * from './retrieve-user-info'
 export * from './sign-in'
 export * from './sign-up'

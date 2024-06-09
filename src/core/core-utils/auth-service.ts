@@ -16,7 +16,8 @@ export const authService = {
       return null
     }
   },
-  encryptPWD: async (password: string) => bcrypt.hash(password, 12),
-  verifyPWD: async (password: string, hash: string) =>
-    bcrypt.compare(password, hash)
+  encryptPWD: async (password: string): Promise<string> =>
+    await bcrypt.hash(password, 10),
+  verifyPWD: async (password: string, hash: string): Promise<boolean> =>
+    await bcrypt.compare(password, hash)
 }

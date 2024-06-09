@@ -2,13 +2,16 @@ import {
   CreateStackUseCase,
   DeleteStackUseCase,
   RetrieveAllStacksUseCase,
-  RetrieveStacksWithTechnologiesUseCase
+  RetrieveStacksWithTechnologiesUseCase,
+  stackRepository,
+  UpdateStackUseCase
 } from '../domain'
 import {
   CreateStackAdapterV1,
   DeleteStackAdapterV1,
   RetrieveAllStacksAdapterV1,
-  RetrieveStacksWithTechnologiesAdapterV1
+  RetrieveStacksWithTechnologiesAdapterV1,
+  UpdateStackAdapterV1
 } from '../infrastructure/v1'
 
 class StackDependencies {
@@ -22,14 +25,20 @@ class StackDependencies {
     new RetrieveStacksWithTechnologiesUseCase(
       new RetrieveStacksWithTechnologiesAdapterV1()
     )
+
+  public updateStack = new UpdateStackUseCase(new UpdateStackAdapterV1())
 }
 
-export class StackPresentation {
+export class StackPresentation implements stackRepository {
   private dependencies = new StackDependencies()
 
-  readonly createStack = this.dependencies.createStack
-  readonly deleteStack = this.dependencies.deleteStack
-  readonly retrieveAllStacks = this.dependencies.retrieveAllStacks
-  readonly retrieveStacksWithTechnologies =
-    this.dependencies.retrieveStacksWithTechnologies
+  public readonly createStack = this.dependencies.createStack.execute
+  public readonly deleteStack = this.dependencies.deleteStack.execute
+  public readonly retrieveAllStacks =
+    this.dependencies.retrieveAllStacks.execute
+
+  public readonly retrieveStacksWithTechnologies =
+    this.dependencies.retrieveStacksWithTechnologies.execute
+
+  public readonly updateStack = this.dependencies.updateStack.execute
 }

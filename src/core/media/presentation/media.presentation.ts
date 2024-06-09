@@ -1,5 +1,6 @@
 import {
   DeleteMediaUseCase,
+  mediaRepository,
   RetrieveAllMediasUseCase,
   UploadMediaUseCase
 } from '../domain'
@@ -18,10 +19,12 @@ class MediaDependencies {
   uploadMedia = new UploadMediaUseCase(new UploadMediaAdapterV1())
 }
 
-export class MediaPresentation {
+export class MediaPresentation implements mediaRepository {
   private dependencies = new MediaDependencies()
 
-  public deleteMedia = this.dependencies.deleteMedia.execute
-  public retrieveAllMedias = this.dependencies.retrieveAllMedias.execute
-  public uploadMedia = this.dependencies.uploadMedia.execute
+  public readonly deleteMedia = this.dependencies.deleteMedia.execute
+  public readonly retrieveAllMedias =
+    this.dependencies.retrieveAllMedias.execute
+
+  public readonly uploadMedia = this.dependencies.uploadMedia.execute
 }

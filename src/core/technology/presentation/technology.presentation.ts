@@ -2,6 +2,7 @@ import {
   CreateTechnologyUseCase,
   DeleteTechnologyUseCase,
   RetrieveAllTechnologiesUseCase,
+  technologyRepository,
   UpdateTechnologyUseCase
 } from '../domain'
 import {
@@ -29,13 +30,13 @@ class TechnologyDependencies {
   )
 }
 
-export class TechnologyPresentation {
+export class TechnologyPresentation implements technologyRepository {
   private dependencies = new TechnologyDependencies()
 
-  readonly createTechnology = this.dependencies.createTechnology.execute
-  readonly deleteTechnology = this.dependencies.deleteTechnology.execute
-  readonly retrieveAllTechnologies =
+  public readonly createTechnology = this.dependencies.createTechnology.execute
+  public readonly deleteTechnology = this.dependencies.deleteTechnology.execute
+  public readonly retrieveAllTechnologies =
     this.dependencies.retrieveAllTechnologies.execute
 
-  readonly updateTechnology = this.dependencies.updateTechnology.execute
+  public readonly updateTechnology = this.dependencies.updateTechnology.execute
 }
