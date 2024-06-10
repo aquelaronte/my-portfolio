@@ -4,6 +4,7 @@
     "space-before-function-paren": "off",
     "indent": "off",
     "brace-style": "off",
-    "comma-spacing": ["off"]
+    "comma-spacing": ["off"],
+    "react/jsx-curly-newline": "off"
   }
 }
