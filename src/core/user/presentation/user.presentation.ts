@@ -14,7 +14,7 @@ import {
   VerifyUserAdapterV1
 } from '../infrastructure/v1'
 
-class UserDependecies {
+export class UserDependecies {
   public retrieveUserInfo = new RetrieveUserInfoUseCase(
     new RetrieveUserInfoAdapterV1()
   )
@@ -31,9 +31,9 @@ class UserDependecies {
 export class UserPresentation implements userRepository {
   private dependencies = new UserDependecies()
 
-  public readonly retrieveUserInfo = this.dependencies.retrieveUserInfo.execute
-  public readonly signIn = this.dependencies.signIn.execute
-  public readonly signUp = this.dependencies.signUp.execute
-  public readonly verifyUser = this.dependencies.verifyUser.execute
-  public readonly decodeToken = this.dependencies.decodeToken.execute
+  public readonly retrieveUserInfo = this.dependencies.retrieveUserInfo
+  public signIn = this.dependencies.signIn
+  public readonly signUp = this.dependencies.signUp
+  public readonly verifyUser = this.dependencies.verifyUser
+  public readonly decodeToken = this.dependencies.decodeToken
 }

@@ -5,6 +5,7 @@
     "indent": "off",
     "brace-style": "off",
     "comma-spacing": ["off"],
-    "react/jsx-curly-newline": "off"
+    "react/jsx-curly-newline": "off",
+    "no-console": "error"
   }
 }

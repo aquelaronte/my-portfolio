@@ -7,7 +7,16 @@ export function middleware(request: NextRequest) {
     const authCookie = request.cookies.get('AUTH_TOKEN')
 
     if (!authCookie) {
-      return NextResponse.redirect(new URL('/signin', request.url))
+      const url = new URL(request.url)
+      const queryParams = url.searchParams
+
+      const token = queryParams.get('token')
+
+      if (!token) {
+        return NextResponse.redirect(new URL('/signin', request.url))
+      }
+
+      return NextResponse.redirect(new URL('/admin', request.url))
     }
   }
 

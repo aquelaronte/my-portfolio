@@ -19,6 +19,7 @@ export type SignInPageStoreActions = {
   signInForm: {
     onSubmit: (event: FormEvent<HTMLFormElement>) => void
     validationError: (error: z.ZodError<signInCredentials>) => void
+    setToken: (token: string) => Promise<void>
   }
 }
 
@@ -42,6 +43,12 @@ export const createSignInPageStore = (
     state: initState,
     actions: {
       signInForm: {
+        setToken: async (token) => {
+          await fetch('/api/user/sign-in', {
+            method: 'PUT',
+            body: JSON.stringify({ token })
+          })
+        },
         validationError: (error) => {
           set(() => ({
             state: {
@@ -78,7 +85,11 @@ export const createSignInPageStore = (
               throw new Error('Invalid email or password')
             }
 
-            const { token } = await response.json()
+            const { token, error } = await response.json()
+
+            if (error) {
+              throw new Error(error)
+            }
 
             set(() => ({
               state: {
@@ -89,13 +100,15 @@ export const createSignInPageStore = (
                 }
               }
             }))
-          } catch (error) {
+          } catch (e) {
+            const error = Error(`${e}`)
+
             set(() => ({
               state: {
                 signInForm: {
-                  data: initializeAsyncStateError(error),
+                  data: initializeAsyncStateError(error.message),
                   validationError: undefined,
-                  error
+                  error: error.message
                 }
               }
             }))

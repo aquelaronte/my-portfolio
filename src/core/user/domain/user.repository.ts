@@ -1,26 +1,15 @@
 import {
-  decodeTokenCredentials,
-  decodeTokenResponse,
-  retrieveUserInfoCredentials,
-  retrieveUserInfoResponse,
-  signInCredentials,
-  signInResponse,
-  signUpCredentials,
-  signUpResponse,
-  verifyUserCredentials,
-  verifyUserResponse
+  DecodeTokenGateway,
+  RetrieveUserInfoGateway,
+  SignInGateway,
+  SignUpGateway,
+  VerifyUserGateway
 } from './actions'
 
 export interface userRepository {
-  retrieveUserInfo(
-    credentials: retrieveUserInfoCredentials
-  ): Promise<retrieveUserInfoResponse>
-
-  signIn(credentials: signInCredentials): Promise<signInResponse>
-
-  signUp(credentials: signUpCredentials): Promise<signUpResponse>
-
-  verifyUser(credentials: verifyUserCredentials): Promise<verifyUserResponse>
-
-  decodeToken(credentials: decodeTokenCredentials): decodeTokenResponse
+  retrieveUserInfo: RetrieveUserInfoGateway
+  signIn: SignInGateway
+  signUp: SignUpGateway
+  verifyUser: VerifyUserGateway
+  decodeToken: DecodeTokenGateway
 }

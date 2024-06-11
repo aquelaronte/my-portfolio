@@ -29,7 +29,7 @@ export class CreateProjectAdapterV1 implements CreateProjectGateway {
               technology: {
                 include: {
                   media: true,
-                  Stack: { select: { id: true, name: true } }
+                  Stack: {}
                 }
               }
             }

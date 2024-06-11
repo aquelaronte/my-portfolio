@@ -8,7 +8,7 @@ export class SignInUseCase {
     this.gateway = gateway
   }
 
-  async execute(credentials: signInCredentials): Promise<signInResponse> {
+  execute(credentials: signInCredentials): Promise<signInResponse> {
     return this.gateway.execute(credentials)
   }
 }
