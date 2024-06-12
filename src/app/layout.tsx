@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 // eslint-disable-next-line camelcase
 import { Work_Sans } from 'next/font/google'
 import './globals.css'
+import Providers from './providers'
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -21,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={workSans.className}>{children}</body>
+      <body className={workSans.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   )
 }

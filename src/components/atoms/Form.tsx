@@ -7,7 +7,8 @@ export interface FormProps<T extends unknown> {
   className?: string
   attributes?: FormHTMLAttributes<HTMLFormElement>
   onValidationFail?: (error: ZodError<T>) => void
-  onSubmit?: (event: FormEvent<HTMLFormElement>) => void
+  onSubmit?: (data: T) => void
+  onSubmitEvent?: (event: FormEvent<HTMLFormElement>) => void
   onSubmissionFail?: (error: unknown) => void
 }
 function Form<T extends unknown>({
@@ -16,6 +17,7 @@ function Form<T extends unknown>({
   className,
   attributes,
   onSubmit,
+  onSubmitEvent,
   onValidationFail,
   onSubmissionFail
 }: FormProps<T>) {
@@ -24,11 +26,14 @@ function Form<T extends unknown>({
       className={className}
       onSubmit={(event) => {
         event.preventDefault()
+        onSubmitEvent?.(event)
         const formData = new FormData(event.currentTarget)
         const data = Object.fromEntries(formData)
         try {
-          validation?.parse(data)
-          onSubmit?.(event)
+          const parsedData = validation?.parse(data)
+          if (parsedData) {
+            // onSubmit?.(parsedData)
+          }
         } catch (error) {
           if (error instanceof ZodError) {
             onValidationFail?.(error)

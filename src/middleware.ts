@@ -1,24 +1,10 @@
 'use server'
 
-import { NextRequest, NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { mainMiddleware } from './components/middleware'
 
 export function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith('/admin')) {
-    const authCookie = request.cookies.get('AUTH_TOKEN')
+  const main = mainMiddleware(request)
 
-    if (!authCookie) {
-      const url = new URL(request.url)
-      const queryParams = url.searchParams
-
-      const token = queryParams.get('token')
-
-      if (!token) {
-        return NextResponse.redirect(new URL('/signin', request.url))
-      }
-
-      return NextResponse.redirect(new URL('/admin', request.url))
-    }
-  }
-
-  return NextResponse.next()
+  return main
 }

@@ -13,3 +13,11 @@ export type FormState<State, Credentials> = {
   error: unknown | undefined
   validationError: z.ZodError<Credentials> | undefined
 }
+
+export type SetFunction<StoreType> = (
+  partial:
+    | StoreType
+    | Partial<StoreType>
+    | ((state: StoreType) => StoreType | Partial<StoreType>),
+  replace?: boolean | undefined
+) => void
