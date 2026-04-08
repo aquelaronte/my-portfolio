@@ -1,23 +1,47 @@
+---
+import Navigation from "../components/Navigation/Navigation.astro";
+import "../styles/globals.css";
+import { Font } from "astro:assets";
+
+interface Props {
+  title?: string;
+  description?: string;
+  index?: boolean;
+  canonical?: string;
+}
+
+const { title, description, index = true, canonical } = Astro.props;
+
+const pageUrl = canonical ?? Astro.url.href;
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+    <!-- standard metadata -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Fonts -->
+    <Font cssVariable="--font-inter" preload />
+    <Font cssVariable="--font-caveat" preload />
+
+    <!-- indexing -->
+    <meta
+      name="robots"
+      content={index
+        ? "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+        : "noindex, nofollow"}
+    />
+    <link rel="canonical" href={pageUrl} />
+  </head>
+  <body class="font-sans antialiased">
+    <main class="relative">
+      <Navigation />
+      <slot />
+    </main>
+  </body>
+</html>
