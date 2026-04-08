@@ -1,0 +1,99 @@
+---
+import { ArrowDown, MapPin } from "lucide-react";
+import { Button } from "./ui/button";
+
+const getInTouchButtonId = "get-in-touch-button";
+const viewMyWorkButtonId = "view-my-work-button";
+---
+
+<section
+  class="flex min-h-[90vh] flex-col justify-center px-6 py-20 md:px-12 lg:px-24"
+>
+  <div class="max-w-4xl">
+    <p class="text-muted-foreground mb-4 flex items-center gap-2">
+      <MapPin className="h-4 w-4" />
+      <span>Medellín, Colombia</span>
+    </p>
+
+    <h1 class="mb-6 text-4xl leading-tight font-bold md:text-6xl lg:text-7xl">
+      <span class="font-display text-5xl md:text-7xl lg:text-8xl">
+        Hi, I&apos;m Brahian
+      </span>
+    </h1>
+
+    <p
+      class="text-foreground/80 mb-8 max-w-2xl text-xl leading-relaxed md:text-2xl"
+    >
+      Software Engineer building scalable systems and leading technical
+      projects. I craft solutions with{" "}
+      <span class="font-display text-accent text-2xl md:text-3xl">
+        cloud infrastructure
+      </span>
+      ,{" "}
+      <span class="font-display text-accent text-2xl md:text-3xl">
+        modern frameworks
+      </span>
+      , and{" "}
+      <span class="font-display text-accent text-2xl md:text-3xl">
+        clean code
+      </span>
+      .
+    </p>
+
+    <div class="mb-16 flex flex-col gap-4 sm:flex-row">
+      <Button id={getInTouchButtonId} size="lg" className="text-base">
+        Get in Touch
+      </Button>
+      <Button
+        id={viewMyWorkButtonId}
+        variant="outline"
+        size="lg"
+        className="text-base"
+      >
+        View My Work
+      </Button>
+    </div>
+
+    <div class="text-muted-foreground flex animate-bounce items-center gap-2">
+      <ArrowDown className="h-5 w-5" />
+      <span class="font-display text-lg">scroll to explore</span>
+    </div>
+  </div>
+
+  <!-- Decorative hand-drawn elements -->
+  <div class="absolute top-20 right-10 opacity-10 md:right-20">
+    <svg
+      width="120"
+      height="120"
+      viewBox="0 0 120 120"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20 60 Q40 20 60 60 T100 60"
+        stroke="currentColor"
+        stroke-width="2"
+        fill="none"
+        class="stroke-foreground"></path>
+      <path
+        d="M30 80 Q50 40 70 80 T110 80"
+        stroke="currentColor"
+        stroke-width="1.5"
+        fill="none"
+        class="stroke-foreground"></path>
+    </svg>
+  </div>
+</section>
+
+<script define:vars={{ getInTouchButtonId, viewMyWorkButtonId }} is:inline>
+  function scrollTo(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  document
+    .getElementById(getInTouchButtonId)
+    ?.addEventListener("click", () => scrollTo("contact"));
+  document
+    .getElementById(viewMyWorkButtonId)
+    ?.addEventListener("click", () => scrollTo("experience"));
+</script>

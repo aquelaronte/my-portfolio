@@ -1,0 +1,142 @@
+---
+import { BookOpen, GraduationCap } from "lucide-react";
+import { Badge } from "./ui/badge";
+
+const education = [
+  {
+    degree: "Bachelor of Science in Computer Science",
+    institution: "University of the People",
+    location: "Pasadena, California (Online)",
+    period: "Currently Enrolled",
+    status: "in-progress",
+    description:
+      "Pursuing a BS in Computer Science through an accredited online university, deepening knowledge in algorithms, data structures, software engineering principles, and computer systems.",
+    highlights: [
+      "Flexible online learning while working full-time",
+      "Focus on theoretical foundations and practical applications",
+      "International student community and collaborative projects",
+    ],
+  },
+  {
+    degree: "Software Development Technician",
+    institution: "Technical Institute",
+    location: "Colombia",
+    period: "Graduated November 2023",
+    status: "completed",
+    description:
+      "Comprehensive program focused on full-stack development, learning to build projects from scratch using various technology stacks.",
+    highlights: [
+      "Built web applications using XAMPP stack (PHP, MariaDB)",
+      "Developed modern applications with NuxtJS and Supabase",
+      "Hands-on project-based learning approach",
+      "Foundation in database design and backend development",
+    ],
+    technologies: ["PHP", "MariaDB", "NuxtJS", "Supabase", "JavaScript"],
+  },
+];
+---
+
+<section
+  id="education"
+  class="border-border border-t px-6 py-20 md:px-12 lg:px-24"
+>
+  <div class="max-w-4xl">
+    <h2 class="font-display mb-2 text-4xl md:text-5xl">Education</h2>
+    <p class="text-muted-foreground mb-12">
+      Academic background & certifications
+    </p>
+
+    <div class="space-y-12">
+      {
+        education.map((edu, index) => (
+          <div class="group">
+            <div class="grid gap-4 md:grid-cols-[200px,1fr] md:gap-8">
+              {/* Timeline */}
+              <div class="space-y-2">
+                <div class="flex items-center gap-2">
+                  {edu.status === "in-progress" ? (
+                    <BookOpen className="h-4 w-4 text-accent" />
+                  ) : (
+                    <GraduationCap className="h-4 w-4 text-accent" />
+                  )}
+                  <span class="font-display text-accent text-lg">
+                    {edu.period}
+                  </span>
+                </div>
+                <p class="text-muted-foreground text-sm">{edu.location}</p>
+                {edu.status === "in-progress" && (
+                  <Badge variant="outline" className="text-xs mt-1">
+                    In Progress
+                  </Badge>
+                )}
+              </div>
+
+              {/* Content */}
+              <div class="space-y-4">
+                <div>
+                  <h3 class="group-hover:text-accent text-xl font-semibold transition-colors">
+                    {edu.degree}
+                  </h3>
+                  <p class="text-foreground/70">{edu.institution}</p>
+                </div>
+
+                <p class="text-foreground/80 leading-relaxed">
+                  {edu.description}
+                </p>
+
+                {/* Highlights */}
+                <ul class="space-y-2">
+                  {edu.highlights.map((highlight, i) => (
+                    <li class="text-foreground/70 flex items-start gap-3 text-sm">
+                      <span class="font-display text-accent mt-0.5 text-lg leading-none">
+                        →
+                      </span>
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Technologies */}
+                {edu.technologies && (
+                  <div class="flex flex-wrap gap-2 pt-2">
+                    {edu.technologies.map((tech) => (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs font-normal"
+                      >
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Decorative line */}
+            {index < education.length - 1 && (
+              <div class="mt-8 ml-50 hidden pl-8 md:block">
+                <svg
+                  width="100%"
+                  height="20"
+                  viewBox="0 0 400 20"
+                  preserveAspectRatio="none"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="opacity-10"
+                >
+                  <path
+                    d="M0 10 Q100 0 200 10 T400 10"
+                    stroke="currentColor"
+                    stroke-width="1"
+                    fill="none"
+                    class="stroke-foreground"
+                  />
+                </svg>
+              </div>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

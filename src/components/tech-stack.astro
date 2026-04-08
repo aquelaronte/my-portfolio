@@ -1,0 +1,115 @@
+---
+import { Badge } from "./ui/badge";
+
+const expertiseSkills = [
+  { name: "GCP", category: "Cloud" },
+  { name: "Terraform", category: "Infrastructure" },
+  { name: "Next.js", category: "Frontend" },
+  { name: "Tailwind CSS", category: "Frontend" },
+  { name: "shadcn/ui", category: "Frontend" },
+  { name: "Express", category: "Backend" },
+  { name: "Hono", category: "Backend" },
+  { name: "NestJS", category: "Backend" },
+  { name: "Flutter", category: "Mobile" },
+  { name: "Go", category: "Backend" },
+];
+
+const otherSkills = [
+  { name: "AWS", category: "Cloud" },
+  { name: "Rust", category: "Systems" },
+];
+---
+
+<section
+  id="skills"
+  class="border-border bg-card border-t px-6 py-20 md:px-12 lg:px-24"
+>
+  <div class="max-w-4xl">
+    <h2 class="font-display mb-2 text-4xl md:text-5xl">Tech Stack</h2>
+    <p class="text-muted-foreground mb-12">
+      Tools and technologies I work with daily
+    </p>
+
+    <div class="space-y-12">
+      {/* Core Expertise */}
+      <div>
+        <h3 class="mb-6 flex items-center gap-3">
+          <span class="font-display text-2xl"> Core Expertise </span>
+          <div class="bg-border h-px flex-1"></div>
+        </h3>
+
+        <div class="flex flex-wrap gap-3">
+          {
+            expertiseSkills.map((skill) => (
+              <div class="group relative">
+                <Badge
+                  variant="outline"
+                  className="hover:border-accent hover:bg-accent/5 cursor-default border-2 px-4 py-4 text-sm font-normal transition-colors"
+                >
+                  {skill.name}
+                </Badge>
+                <span class="text-muted-foreground absolute -top-6 left-1/2 -translate-x-1/2 text-xs whitespace-nowrap opacity-0 transition-opacity group-hover:opacity-100">
+                  {skill.category}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      {/* Also Experienced With */}
+      <div>
+        <h3 class="mb-6 flex items-center gap-3">
+          <span class="text-muted-foreground font-display text-2xl">
+            Also worked with
+          </span>
+          <div class="bg-border h-px flex-1"></div>
+        </h3>
+
+        <div class="flex flex-wrap gap-3">
+          {
+            otherSkills.map((skill) => (
+              <div class="group relative">
+                <Badge
+                  variant="secondary"
+                  className="cursor-default px-4 py-4 text-sm font-normal"
+                >
+                  {skill.name}
+                </Badge>
+                <span class="text-muted-foreground absolute -top-6 left-1/2 -translate-x-1/2 text-xs whitespace-nowrap opacity-0 transition-opacity group-hover:opacity-100">
+                  {skill.category}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    {/* Decorative sketch element */}
+    <div class="mt-16 flex justify-center">
+      <svg
+        width="200"
+        height="40"
+        viewBox="0 0 200 40"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="opacity-20"
+      >
+        <path
+          d="M10 20 Q50 5 100 20 T190 20"
+          stroke="currentColor"
+          stroke-width="1.5"
+          fill="none"
+          stroke-dasharray="4 4"
+          class="stroke-foreground"></path>
+        <circle
+          cx="100"
+          cy="20"
+          r="3"
+          fill="currentColor"
+          class="fill-foreground"></circle>
+      </svg>
+    </div>
+  </div>
+</section>

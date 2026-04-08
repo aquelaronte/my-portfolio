@@ -1,0 +1,92 @@
+---
+import { ExternalLink, Mail } from "lucide-react";
+import { Button } from "../ui/button";
+import Linkedin from "../icons/linkedin.astro";
+import Github from "../icons/github.astro";
+import { ContactSayHello } from "./say-hello";
+---
+
+<section
+  id="contact"
+  class="border-border bg-card border-t px-6 py-20 md:px-12 lg:px-24"
+>
+  <div class="max-w-4xl">
+    <div class="grid gap-12 md:grid-cols-2 md:gap-20">
+      {/* Left - CTA */}
+      <div>
+        <h2 class="font-display mb-4 text-4xl md:text-5xl">
+          Let&apos;s work together
+        </h2>
+        <p class="text-foreground/80 mb-8 leading-relaxed">
+          I&apos;m currently looking for remote opportunities with international
+          teams. If you&apos;re building something interesting and need an
+          engineer who can lead technical projects and deliver scalable
+          solutions, let&apos;s talk.
+        </p>
+
+        <ContactSayHello />
+      </div>
+
+      {/* Right - Links */}
+      <div class="space-y-8">
+        <div>
+          <h3 class="font-display text-muted-foreground mb-4 text-2xl">
+            Find me on
+          </h3>
+
+          <div class="space-y-3">
+            <a
+              href="https://github.com/brahianarias"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-foreground/80 hover:text-accent group flex items-center gap-3 transition-colors"
+            >
+              <Github class="h-5 w-5" />
+              <span>GitHub</span>
+              <ExternalLink
+                className="ml-auto h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100"
+              />
+            </a>
+
+            <a
+              href="https://linkedin.com/in/brahianarias"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-foreground/80 hover:text-accent group flex items-center gap-3 transition-colors"
+            >
+              <Linkedin class="h-5 w-5" />
+              <span>LinkedIn</span>
+              <ExternalLink
+                className="ml-auto h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100"
+              />
+            </a>
+
+            <a
+              href="mailto:contact@brahianarias.dev"
+              class="text-foreground/80 hover:text-accent group flex items-center gap-3 transition-colors"
+            >
+              <Mail className="h-5 w-5" />
+              <span>contact@brahianarias.dev</span>
+              <ExternalLink
+                className="ml-auto h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100"
+              />
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-display text-muted-foreground mb-2 text-2xl">
+            Location
+          </h3>
+          <p class="text-foreground/80">
+            Medellín, Colombia
+            <br />
+            <span class="text-muted-foreground text-sm">
+              Open to remote work worldwide
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

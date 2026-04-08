@@ -1,9 +1,26 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Hero from "@/components/hero.astro";
+import About from "@/components/about.astro";
+import Layout from "@/layouts/layout.astro";
+import TechStack from "@/components/tech-stack.astro";
+import Portfolio from "@/components/portfolio.astro";
+import Experience from "@/components/experience.astro";
+import Education from "@/components/education.astro";
+import Contact from "@/components/contact/contact.astro";
+import Footer from "@/components/footer.astro";
 ---
 
 <Layout
-  title="Brahian Arias - Software Engineer"
-  description="Meet Brahian Arias. A young software engineer that values efficiency and functionality"
+  title="Brahian Arias | Software Engineer"
+  description="Software Engineer from Colombia specializing in cloud infrastructure, full-stack development, and technical leadership. Open to remote opportunities."
   index
-/>
+>
+  <Hero />
+  <About />
+  <TechStack />
+  <Portfolio />
+  <Experience />
+  <Education />
+  <Contact />
+  <Footer />
+</Layout>

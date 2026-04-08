@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { cn } from "../../lib/utils/cn"
+import { cn } from "../../lib/utils"
 
 export interface NavigationProps {
   navItems: {
@@ -18,6 +18,8 @@ export function NavBar({ navItems }: NavigationProps) {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
 
+
+      console.log("scroll")
       // Determine active section
       const sections = navItems.map(item => item.href.slice(1))
       for (const section of sections.reverse()) {
