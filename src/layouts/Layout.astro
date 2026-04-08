@@ -1,5 +1,5 @@
 ---
-import Navigation from "../components/Navigation/Navigation.astro";
+import NavBar from "@/components/nav-bar/nav-bar.astro";
 import "../styles/globals.css";
 import { Font } from "astro:assets";
 
@@ -39,7 +39,7 @@ const pageUrl = canonical ?? Astro.url.href;
     <link rel="canonical" href={pageUrl} />
   </head>
   <body class="font-sans antialiased">
-    <Navigation />
+    <NavBar />
     <main class="relative">
       <slot />
     </main>

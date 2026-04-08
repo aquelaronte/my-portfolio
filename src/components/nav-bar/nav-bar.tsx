@@ -10,7 +10,7 @@ export interface NavigationProps {
 
   }[]
 }
-export function Navigation({ navItems }: NavigationProps) {
+export function NavBar({ navItems }: NavigationProps) {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("")
 
