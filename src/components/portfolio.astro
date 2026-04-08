@@ -1,43 +1,67 @@
 ---
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, LockKeyhole, ChevronDown } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Image } from "astro:assets";
-import xellImage from "../assets/xell.png";
-import matchLatinImage from "../assets/matchlatin.png";
-import audit1Image from "../assets/audit1.png";
+import queronTechImage from "../assets/querontech.png";
 
 const projects = [
   {
     title: "US workers' comp insurance policy audit system",
-    subtitle: "Audit1",
-    description:
-      "Led the development of a web application for auditing workers' compensation insurance policies in the US. The system features automated data extraction from payroll documents and integration with third-party APIs for seamless integration with payroll providers. I was responsible for designing and implementing the frontend architecture.",
+    impact: [
+      "Designed the frontend architecture for 4 separate client-facing portals, each as an independent Next.js application.",
+      "Delivered UX improvements that reduced manual input errors by 45%, significantly improving the auditors' day-to-day experience.",
+      "Engineered a shared commons library to orchestrate all 4 portals — centralizing UI components, utilities, and configuration to keep codebases in sync.",
+      "Centralized bug fixes and feature rollouts through the commons library, eliminating duplicated work across portals.",
+      "Built the GraphQL gateway from scratch to serve as the unified entry point for a distributed microservices backend.",
+      "Defined the GraphQL schema and resolver layer to abstract service boundaries and simplify frontend data fetching.",
+    ],
     technologies: ["Next.js", "Tailwind", "Shadcn/ui", "MongoDB", "GraphQL"],
+    anon: true,
     type: "Web App",
-    image: audit1Image,
-    url: "https://audit1.com/",
   },
   {
     title: "CRM & Sales Analytics Platform",
-    subtitle: "XELL",
-    description:
-      "Developed a native mobile application. The app provides real-time insights, payment processing, and seamless integration with the web. Also it was deployed by me to the app stores, ensuring compliance with platform guidelines.",
+    impact: [
+      "Took over a non-functional application that had been rejected from the App Store and rebuilt it entirely from scratch using feature-based clean architecture.",
+      "Redesigned the full project structure with a clean architecture approach, making the codebase scalable, testable, and maintainable. Also implemented testing strategies to ensure long-term reliability.",
+      "Implemented real-time sales dashboards using GraphQL subscriptions, delivering live data updates to field reps without polling.",
+      "Architected secure payment processing modules with hardware integration for proximity transactions.",
+      "Developed low-level native bridges (Kotlin/Swift) for local network hardware discovery and secure protocol communication.",
+      "Managed all Firebase storage integration for media and document handling across the app.",
+    ],
     technologies: ["Flutter", "GraphQL", "Firebase", "Kotlin", "Swift"],
+    anon: true,
     type: "Mobile",
-    image: xellImage,
-    url: "https://xell.shop/",
   },
   {
     title: "Dating Application",
-    subtitle: "MatchLatin",
-    description:
-      "Built from scrath a progressive web app for a dating platform. The app features real-time chat, geolocation-based matching, and secure payment processing for premium features.",
+    impact: [
+      "Built the full PWA from scratch, covering frontend, backend, and cloud infrastructure.",
+      "Implemented geolocation-based matching algorithm and real-time chat using Supabase Realtime.",
+      "Provisioned and managed cloud infrastructure on GCP with Terraform, ensuring reproducible deployments.",
+      "Integrated a third-party payment provider for premium subscription processing with webhook-driven entitlement management.",
+    ],
     technologies: ["Next.JS", "Tailwind", "Supabase", "GCP", "Terraform"],
+    anon: true,
     type: "Web App, Backend, and Infrastructure",
-    image: matchLatinImage,
-    url: "https://matchlatin.com/",
+  },
+  {
+    title: "Landing Page",
+    subtitle: "Queron Technologies",
+    impact: [
+      "Designed and built a conversion-focused landing page for Queron Technologies.",
+      "Architected a multi-step marketing funnel guiding visitors from awareness to lead capture.",
+      "Set up UTM-based attribution to measure which social media campaigns drove the highest-quality leads.",
+      "Configured custom conversion events and funnel drop-off reports to support ongoing A/B testing.",
+    ],
+    technologies: ["Next.JS", "Tailwind", "GA4", "Meta Pixel"],
+    type: "Web",
+    url: "https://querontech.com/",
+    image: queronTechImage,
   },
 ];
+
+const VISIBLE_BULLETS = 4;
 ---
 
 <section
@@ -109,6 +133,18 @@ const projects = [
                     {project.type}
                   </Badge>
                 </div>
+                {/* Anonymized badge */}
+                {project.anon && (
+                  <div class="absolute top-3 right-3">
+                    <Badge
+                      variant="outline"
+                      className="bg-background/80 text-xs font-normal backdrop-blur-sm flex items-center gap-1"
+                    >
+                      <LockKeyhole className="h-3 w-3" />
+                      Client protected
+                    </Badge>
+                  </div>
+                )}
               </div>
 
               {/* Content */}
@@ -118,12 +154,36 @@ const projects = [
                     {project.title}
                     <ArrowUpRight className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
                   </h3>
-                  <h2 class="text-sm">{project.subtitle}</h2>
+                  {project.subtitle && (
+                    <h2 class="text-sm">{project.subtitle}</h2>
+                  )}
                 </div>
 
-                <p class="text-foreground/70 text-sm leading-relaxed">
-                  {project.description}
-                </p>
+                {/* Impact bullets */}
+                <ul class="space-y-1.5">
+                  {project.impact.map((point, i) => (
+                    <li
+                      class:list={[
+                        "text-foreground/70 flex items-start gap-2 text-sm leading-relaxed",
+                        i >= VISIBLE_BULLETS ? "impact-extra hidden" : "",
+                      ]}
+                    >
+                      <span class="text-accent mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-current" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* See more / See less */}
+                {project.impact.length > VISIBLE_BULLETS && (
+                  <button
+                    type="button"
+                    class="see-more-btn text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs transition-colors"
+                  >
+                    <ChevronDown className="see-more-icon h-3.5 w-3.5 transition-transform duration-200" />
+                    <span class="see-more-label">See more</span>
+                  </button>
+                )}
 
                 {/* Technologies */}
                 <div class="flex flex-wrap gap-1.5 pt-2">
@@ -154,3 +214,23 @@ const projects = [
     </div>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll(".see-more-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const article = btn.closest("article");
+      const extras = article?.querySelectorAll(".impact-extra");
+      const label = btn.querySelector(".see-more-label");
+      const icon = btn.querySelector(".see-more-icon");
+      const expanded = btn.getAttribute("data-expanded") === "true";
+
+      extras?.forEach((el) => el.classList.toggle("hidden", expanded));
+      btn.setAttribute("data-expanded", String(!expanded));
+      if (label) label.textContent = expanded ? "See more" : "See less";
+      if (icon) {
+        icon.classList.toggle("rotate-180", !expanded);
+      }
+    });
+  });
+</script>
