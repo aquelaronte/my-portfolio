@@ -127,3 +127,66 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Animated Wave Keyframes */
+@keyframes wave-flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: 28;
+  }
+}
+
+@keyframes wave-flow-reverse {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -20;
+  }
+}
+
+@keyframes wave-vertical {
+
+  0%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dashoffset: 14;
+  }
+}
+
+@keyframes pulse-slow {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.animate-wave-flow {
+  animation: wave-flow 3s linear infinite;
+}
+
+.animate-wave-flow-reverse {
+  animation: wave-flow-reverse 4s linear infinite;
+}
+
+.animate-wave-vertical {
+  animation: wave-vertical 4s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}

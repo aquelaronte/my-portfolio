@@ -1,6 +1,7 @@
 ---
 import { ArrowDown, MapPin } from "lucide-react";
 import { Button } from "./ui/button";
+import AnimatedWave from "./animated-wave.astro";
 
 const getInTouchButtonId = "get-in-touch-button";
 const viewMyWorkButtonId = "view-my-work-button";
@@ -53,27 +54,16 @@ const viewMyWorkButtonId = "view-my-work-button";
   </div>
 
   <!-- Decorative hand-drawn elements -->
-  <div class="absolute top-20 right-10 opacity-10 md:right-20">
-    <svg
-      width="120"
-      height="120"
-      viewBox="0 0 120 120"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M20 60 Q40 20 60 60 T100 60"
-        stroke="currentColor"
-        stroke-width="2"
-        fill="none"
-        class="stroke-foreground"></path>
-      <path
-        d="M30 80 Q50 40 70 80 T110 80"
-        stroke="currentColor"
-        stroke-width="1.5"
-        fill="none"
-        class="stroke-foreground"></path>
-    </svg>
+  <div class="absolute top-20 right-10 h-80 w-80 opacity-15 md:right-20">
+    <AnimatedWave variant="corner" class="h-full w-full" />
+  </div>
+
+  <div class="absolute right-1/4 bottom-32 hidden w-64 opacity-10 md:block">
+    <AnimatedWave variant="horizontal" delay={0.5} class="w-full" />
+  </div>
+
+  <div class="absolute top-1/3 left-6 hidden h-48 w-10 opacity-10 lg:block">
+    <AnimatedWave variant="vertical" delay={1} class="h-full w-full" />
   </div>
 </section>
 

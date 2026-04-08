@@ -1,0 +1,138 @@
+---
+interface Props {
+  variant?: "vertical" | "corner" | "accent" | "horizontal";
+  class?: string;
+  delay?: number;
+}
+
+const { variant = "horizontal", class: className, delay = 0 } = Astro.props;
+
+const delayStyle = {
+  animationDelay: `${delay}s`,
+};
+---
+
+{
+  variant === "vertical" && (
+    <svg
+      viewBox="0 0 40 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class={className}
+    >
+      <path
+        d="M20 10 Q5 50 20 100 T20 190"
+        stroke="currentColor"
+        stroke-width="1.5"
+        fill="none"
+        stroke-dasharray="6 8"
+        stroke-linecap="round"
+        class="stroke-foreground animate-wave-vertical"
+        style={delayStyle}
+      />
+      <circle
+        cx="20"
+        cy="100"
+        r="3"
+        fill="currentColor"
+        class="fill-accent animate-pulse-slow"
+        style={delayStyle}
+      />
+    </svg>
+  )
+}
+
+{
+  variant === "corner" && (
+    <svg
+      viewBox="0 0 120 120"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class={className}
+    >
+      <path
+        d="M10 110 Q10 60 60 60 Q110 60 110 10"
+        stroke="currentColor"
+        stroke-width="1.5"
+        fill="none"
+        stroke-dasharray="6 8"
+        stroke-linecap="round"
+        class="stroke-foreground animate-wave-flow"
+        style={delayStyle}
+      />
+      <circle
+        cx="60"
+        cy="60"
+        r="3"
+        fill="currentColor"
+        class="fill-accent animate-pulse-slow"
+        style={{ animationDelay: `${delay + 0.5}s` }}
+      />
+    </svg>
+  )
+}
+
+{
+  variant === "accent" && (
+    <svg
+      viewBox="0 0 300 60"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class={className}
+    >
+      <path
+        d="M10 30 Q50 10 100 30 T190 30 T280 30"
+        stroke="currentColor"
+        stroke-width="2"
+        fill="none"
+        stroke-dasharray="8 10"
+        stroke-linecap="round"
+        class="stroke-accent animate-wave-flow"
+        style={delayStyle}
+      />
+      <path
+        d="M30 45 Q70 25 120 45 T210 45 T290 45"
+        stroke="currentColor"
+        stroke-width="1"
+        fill="none"
+        stroke-dasharray="4 6"
+        stroke-linecap="round"
+        class="stroke-foreground/30 animate-wave-flow-reverse"
+        style={{ animationDelay: `${delay + 0.3}s` }}
+      />
+    </svg>
+  )
+}
+
+{
+  variant === "horizontal" && (
+    <svg
+      viewBox="0 0 400 60"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class={`${className}`}
+      preserveAspectRatio="none"
+    >
+      <path
+        d="M0 30 Q50 10 100 30 T200 30 T300 30 T400 30"
+        stroke="currentColor"
+        stroke-width="1.5"
+        fill="none"
+        stroke-dasharray="6 8"
+        stroke-linecap="round"
+        class="stroke-foreground animate-wave-flow"
+        style={delayStyle}
+      />
+      <path
+        d="M0 40 Q50 55 100 40 T200 40 T300 40 T400 40"
+        stroke="currentColor"
+        stroke-width="1"
+        fill="none"
+        stroke-dasharray="4 6"
+        stroke-linecap="round"
+        class="stroke-foreground/50 animate-wave-flow-reverse"
+        style={{ animationDelay: `${delay + 0.5}s` }}
+      />
+    </svg>
+  )
+}
