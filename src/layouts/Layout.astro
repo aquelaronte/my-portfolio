@@ -39,8 +39,8 @@ const pageUrl = canonical ?? Astro.url.href;
     <link rel="canonical" href={pageUrl} />
   </head>
   <body class="font-sans antialiased">
+    <Navigation />
     <main class="relative">
-      <Navigation />
       <slot />
     </main>
   </body>
