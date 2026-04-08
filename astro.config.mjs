@@ -15,8 +15,8 @@ export default defineConfig({
     },
     {
       provider: fontProviders.google(),
-      name: "Caveat",
-      cssVariable: "--font-caveat",
+      name: "JetBrains Mono",
+      cssVariable: "--font-jetbrains-mono",
     },
   ],
 

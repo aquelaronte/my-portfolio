@@ -1,39 +1,41 @@
 ---
 import { ArrowUpRight } from "lucide-react";
 import { Badge } from "./ui/badge";
+import { Image } from "astro:assets";
+import xellImage from "../assets/xell.png";
+import matchLatinImage from "../assets/matchlatin.png";
+import audit1Image from "../assets/audit1.png";
 
 const projects = [
   {
-    title: "Cloud Infrastructure Platform",
+    title: "US workers' comp insurance policy audit system",
+    subtitle: "Audit1",
     description:
-      "Designed and deployed a multi-tenant cloud infrastructure using Terraform and GCP. Implemented automated provisioning, monitoring, and scaling for enterprise clients.",
-    technologies: ["GCP", "Terraform", "Docker", "Kubernetes"],
-    type: "Infrastructure",
-    image: "/placeholder-project-1.jpg",
-  },
-  {
-    title: "E-commerce Mobile App",
-    description:
-      "Built a cross-platform mobile application for a retail client. Features include real-time inventory sync, push notifications, and seamless payment integration.",
-    technologies: ["Flutter", "Firebase", "Stripe", "NestJS"],
-    type: "Mobile",
-    image: "/placeholder-project-2.jpg",
-  },
-  {
-    title: "SaaS Analytics Dashboard",
-    description:
-      "Full-stack web application providing real-time analytics and reporting. Built with a focus on performance and user experience.",
-    technologies: ["Next.js", "Tailwind", "Go", "PostgreSQL"],
+      "Led the development of a web application for auditing workers' compensation insurance policies in the US. The system features automated data extraction from payroll documents and integration with third-party APIs for seamless integration with payroll providers. I was responsible for designing and implementing the frontend architecture.",
+    technologies: ["Next.js", "Tailwind", "Shadcn/ui", "MongoDB", "GraphQL"],
     type: "Web App",
-    image: "/placeholder-project-3.jpg",
+    image: audit1Image,
+    url: "https://audit1.com/",
   },
   {
-    title: "API Gateway & Microservices",
+    title: "CRM & Sales Analytics Platform",
+    subtitle: "XELL",
     description:
-      "Architected a microservices ecosystem with centralized authentication, rate limiting, and service discovery for a fintech startup.",
-    technologies: ["Go", "Hono", "Redis", "GCP Cloud Run"],
-    type: "Backend",
-    image: "/placeholder-project-4.jpg",
+      "Developed a native mobile application. The app provides real-time insights, payment processing, and seamless integration with the web. Also it was deployed by me to the app stores, ensuring compliance with platform guidelines.",
+    technologies: ["Flutter", "GraphQL", "Firebase", "Kotlin", "Swift"],
+    type: "Mobile",
+    image: xellImage,
+    url: "https://xell.shop/",
+  },
+  {
+    title: "Dating Application",
+    subtitle: "MatchLatin",
+    description:
+      "Built from scrath a progressive web app for a dating platform. The app features real-time chat, geolocation-based matching, and secure payment processing for premium features.",
+    technologies: ["Next.JS", "Tailwind", "Supabase", "GCP", "Terraform"],
+    type: "Web App, Backend, and Infrastructure",
+    image: matchLatinImage,
+    url: "https://matchlatin.com/",
   },
 ];
 ---
@@ -51,80 +53,102 @@ const projects = [
     <div class="grid gap-8 md:grid-cols-2">
       {
         projects.map((project, index) => (
-          <article class="group bg-card border-border hover:border-accent/50 relative overflow-hidden rounded-lg border transition-all duration-300">
-            {/* Project image placeholder */}
-            <div class="bg-muted relative aspect-video overflow-hidden">
-              <div class="absolute inset-0 flex items-center justify-center">
-                <span class="font-display text-muted-foreground/20 text-6xl">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-              </div>
-              {/* Decorative sketch lines */}
-              <svg
-                class="absolute inset-0 h-full w-full opacity-5"
-                viewBox="0 0 400 225"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0 50 Q100 30 200 50 T400 50"
-                  stroke="currentColor"
-                  stroke-width="1"
-                  fill="none"
-                  class="stroke-foreground"
-                />
-                <path
-                  d="M0 150 Q100 170 200 150 T400 150"
-                  stroke="currentColor"
-                  stroke-width="1"
-                  fill="none"
-                  class="stroke-foreground"
-                />
-              </svg>
-              {/* Type badge */}
-              <div class="absolute top-3 left-3">
-                <Badge
-                  variant="secondary"
-                  className="bg-background/80 text-xs font-normal backdrop-blur-sm"
-                >
-                  {project.type}
-                </Badge>
-              </div>
-            </div>
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block"
+          >
+            <article class="group bg-card border-border hover:border-accent/50 relative overflow-hidden rounded-lg border transition-all duration-300">
+              {/* Project image placeholder */}
+              <div class="bg-muted relative aspect-video overflow-hidden">
+                {project.image && (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    width={800}
+                    height={450}
+                    class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+                    onload="this.classList.remove('opacity-0')"
+                    onerror="this.style.display='none'"
+                  />
+                )}
 
-            {/* Content */}
-            <div class="space-y-3 p-5">
-              <h3 class="group-hover:text-accent flex items-center gap-2 text-lg font-semibold transition-colors">
-                {project.title}
-                <ArrowUpRight className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
-              </h3>
-
-              <p class="text-foreground/70 text-sm leading-relaxed">
-                {project.description}
-              </p>
-
-              {/* Technologies */}
-              <div class="flex flex-wrap gap-1.5 pt-2">
-                {project.technologies.map((tech) => (
-                  <span class="text-muted-foreground bg-muted rounded px-2 py-0.5 text-xs">
-                    {tech}
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="font-display text-muted-foreground/20 text-6xl">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
-                ))}
+                </div>
+                {/* Decorative sketch lines */}
+                <svg
+                  class="absolute inset-0 h-full w-full opacity-5"
+                  viewBox="0 0 400 225"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M0 50 Q100 30 200 50 T400 50"
+                    stroke="currentColor"
+                    stroke-width="1"
+                    fill="none"
+                    class="stroke-foreground"
+                  />
+                  <path
+                    d="M0 150 Q100 170 200 150 T400 150"
+                    stroke="currentColor"
+                    stroke-width="1"
+                    fill="none"
+                    class="stroke-foreground"
+                  />
+                </svg>
+                {/* Type badge */}
+                <div class="absolute top-3 left-3">
+                  <Badge
+                    variant="secondary"
+                    className="bg-background/80 text-xs font-normal backdrop-blur-sm"
+                  >
+                    {project.type}
+                  </Badge>
+                </div>
               </div>
-            </div>
 
-            {/* Decorative corner */}
-            <div class="absolute right-0 bottom-0 h-12 w-12 overflow-hidden opacity-0 transition-opacity group-hover:opacity-100">
-              <svg viewBox="0 0 48 48" class="h-full w-full">
-                <path
-                  d="M48 0 L48 48 L0 48"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1"
-                  class="stroke-accent/30"
-                />
-              </svg>
-            </div>
-          </article>
+              {/* Content */}
+              <div class="space-y-3 p-5">
+                <div class="flex flex-col items-start gap-1">
+                  <h3 class="group-hover:text-accent flex items-center gap-2 text-lg font-semibold transition-colors">
+                    {project.title}
+                    <ArrowUpRight className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
+                  </h3>
+                  <h2 class="text-sm">{project.subtitle}</h2>
+                </div>
+
+                <p class="text-foreground/70 text-sm leading-relaxed">
+                  {project.description}
+                </p>
+
+                {/* Technologies */}
+                <div class="flex flex-wrap gap-1.5 pt-2">
+                  {project.technologies.map((tech) => (
+                    <span class="text-muted-foreground bg-muted rounded px-2 py-0.5 text-xs">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Decorative corner */}
+              <div class="absolute right-0 bottom-0 h-12 w-12 overflow-hidden opacity-0 transition-opacity group-hover:opacity-100">
+                <svg viewBox="0 0 48 48" class="h-full w-full">
+                  <path
+                    d="M48 0 L48 48 L0 48"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1"
+                    class="stroke-accent/30"
+                  />
+                </svg>
+              </div>
+            </article>
+          </a>
         ))
       }
     </div>

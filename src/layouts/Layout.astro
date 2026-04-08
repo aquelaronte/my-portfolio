@@ -20,6 +20,7 @@ const pageUrl = canonical ?? Astro.url.href;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
 
     <!-- standard metadata -->
     <title>{title}</title>
@@ -27,7 +28,7 @@ const pageUrl = canonical ?? Astro.url.href;
 
     <!-- Fonts -->
     <Font cssVariable="--font-inter" preload />
-    <Font cssVariable="--font-caveat" preload />
+    <Font cssVariable="--font-jetbrains-mono" preload />
 
     <!-- indexing -->
     <meta

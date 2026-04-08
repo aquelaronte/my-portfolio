@@ -4,7 +4,7 @@ import { Badge } from "./ui/badge";
 
 const experiences = [
   {
-    period: "2024 — Present",
+    period: "Dec 2025 — Present",
     title: "Lead Software Engineer & Founder",
     company: "Self-employed",
     location: "Medellín, Colombia",
@@ -12,26 +12,27 @@ const experiences = [
       "Founded and legally established a software consultancy in Colombia. Handled all aspects of company formation including RUT registration, tax obligations with DIAN, legal entity setup (SAS), and compliance with local regulations.",
     technologies: ["Business Development", "GCP", "Terraform", "Next.js", "Go"],
     highlights: [
-      "Registered company with Cámara de Comercio and obtained NIT",
       "Set up accounting systems and tax compliance with DIAN",
       "Established contracts and legal frameworks for international clients",
       "Managing end-to-end project delivery and client relationships",
     ],
+    url: "https://www.querontech.com",
   },
   {
-    period: "Dec 2023 — Present",
+    period: "Dec 2023 — Apr 2026",
     title: "Software Engineer",
     company: "Technical Lead",
     location: "Medellín, Colombia",
     description:
       "Leading technical projects and architecting scalable solutions. Building full-stack applications, designing cloud infrastructure, and mentoring team members on best practices.",
-    technologies: ["GCP", "Terraform", "Next.js", "NestJS", "Go", "Flutter"],
+    technologies: ["GCP", "Terraform", "Next.js", "NestJS", "Flutter"],
     highlights: [
       "Led end-to-end development of multiple client projects",
       "Designed and implemented cloud infrastructure using GCP and Terraform",
       "Built performant web applications with Next.js and modern UI frameworks",
       "Developed mobile solutions with Flutter for cross-platform deployment",
     ],
+    url: "https://byte4bit.com",
   },
 ];
 ---
@@ -46,77 +47,82 @@ const experiences = [
 
     <div class="space-y-16">
       {
-        experiences.map((exp, index) => (
+        experiences.map((exp) => (
           <div class="group">
-            <div class="grid gap-4 md:grid-cols-[200px,1fr] md:gap-8">
-              {/* Timeline */}
-              <div class="space-y-1">
-                <span class="font-display text-accent text-lg">
-                  {exp.period}
-                </span>
-                <p class="text-muted-foreground text-sm">{exp.location}</p>
-              </div>
-
-              {/* Content */}
-              <div class="space-y-4">
-                <div>
-                  <h3 class="group-hover:text-accent flex items-center gap-2 text-xl font-semibold transition-colors">
-                    {exp.title}
-                    <span class="text-muted-foreground font-normal">·</span>
-                    <span class="text-foreground/70 font-normal">
-                      {exp.company}
-                    </span>
-                    <ArrowUpRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </h3>
+            <a href={exp.url} target="_blank" rel="noopener noreferrer">
+              <div class="grid gap-4 md:grid-cols-[200px,1fr] md:gap-8">
+                {/* Timeline */}
+                <div class="space-y-1">
+                  <span class="font-display text-accent text-lg">
+                    {exp.period}
+                  </span>
+                  <p class="text-muted-foreground text-sm">{exp.location}</p>
                 </div>
 
-                <p class="text-foreground/80 leading-relaxed">
-                  {exp.description}
-                </p>
-
-                {/* Highlights */}
-                <ul class="mt-4 space-y-2">
-                  {exp.highlights.map((highlight, i) => (
-                    <li class="text-foreground/70 flex items-start gap-3 text-sm">
-                      <span class="font-display text-accent mt-0.5 text-lg leading-none">
-                        →
+                {/* Content */}
+                <div class="space-y-4">
+                  <div>
+                    <h3 class="group-hover:text-accent flex items-center gap-2 text-xl font-semibold transition-colors">
+                      {exp.title}
+                      <span class="text-muted-foreground font-normal">·</span>
+                      <span class="text-foreground/70 font-normal">
+                        {exp.company}
                       </span>
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
+                      <ArrowUpRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </h3>
+                  </div>
 
-                {/* Technologies */}
-                <div class="flex flex-wrap gap-2 pt-4">
-                  {exp.technologies.map((tech) => (
-                    <Badge variant="secondary" className="text-xs font-normal">
-                      {tech}
-                    </Badge>
-                  ))}
+                  <p class="text-foreground/80 leading-relaxed">
+                    {exp.description}
+                  </p>
+
+                  {/* Highlights */}
+                  <ul class="mt-4 space-y-2">
+                    {exp.highlights.map((highlight, i) => (
+                      <li class="text-foreground/70 flex items-start gap-3 text-sm">
+                        <span class="font-display text-accent mt-0.5 text-lg leading-none">
+                          →
+                        </span>
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Technologies */}
+                  <div class="flex flex-wrap gap-2 pt-4">
+                    {exp.technologies.map((tech) => (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs font-normal"
+                      >
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Decorative line */}
-            <div class="mt-8 ml-50 hidden pl-8 md:block">
-              <svg
-                width="100%"
-                height="20"
-                viewBox="0 0 400 20"
-                preserveAspectRatio="none"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="opacity-10"
-              >
-                <path
-                  d="M0 10 Q100 0 200 10 T400 10"
-                  stroke="currentColor"
-                  stroke-width="1"
+              {/* Decorative line */}
+              <div class="mt-8 ml-50 hidden pl-8 md:block">
+                <svg
+                  width="100%"
+                  height="20"
+                  viewBox="0 0 400 20"
+                  preserveAspectRatio="none"
                   fill="none"
-                  class="stroke-foreground"
-                />
-              </svg>
-            </div>
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="opacity-10"
+                >
+                  <path
+                    d="M0 10 Q100 0 200 10 T400 10"
+                    stroke="currentColor"
+                    stroke-width="1"
+                    fill="none"
+                    class="stroke-foreground"
+                  />
+                </svg>
+              </div>
+            </a>
           </div>
         ))
       }
