@@ -2,9 +2,19 @@
 import { ArrowUpRight, LockKeyhole, ChevronDown } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Image } from "astro:assets";
-import queronTechImage from "../assets/querontech.png";
 
-const projects = [
+interface Project {
+  title: string;
+  impact: string[];
+  technologies: string[];
+  anon: boolean;
+  type: string;
+  url?: string;
+  image?: string;
+  subtitle?: string;
+}
+
+const projects: Project[] = [
   {
     title: "US workers' comp insurance policy audit system",
     impact: [
@@ -44,20 +54,6 @@ const projects = [
     technologies: ["Next.JS", "Tailwind", "Supabase", "GCP", "Terraform"],
     anon: true,
     type: "Web App, Backend, and Infrastructure",
-  },
-  {
-    title: "Landing Page",
-    subtitle: "Queron Technologies",
-    impact: [
-      "Designed and built a conversion-focused landing page for Queron Technologies.",
-      "Architected a multi-step marketing funnel guiding visitors from awareness to lead capture.",
-      "Set up UTM-based attribution to measure which social media campaigns drove the highest-quality leads.",
-      "Configured custom conversion events and funnel drop-off reports to support ongoing A/B testing.",
-    ],
-    technologies: ["Next.JS", "Tailwind", "GCP"],
-    type: "Web",
-    url: "https://querontech.com/",
-    image: queronTechImage,
   },
 ];
 
