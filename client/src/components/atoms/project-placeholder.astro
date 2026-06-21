@@ -1,0 +1,126 @@
+---
+/**
+ * project-placeholder — generated cover for projects without a real image.
+ * Renders an on-brand SVG (blueprint grid + accent glow + initials/name) that
+ * is deterministic per project name, so each placeholder looks intentional and
+ * distinct instead of a generic stock image.
+ */
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+
+// Deterministic hue from the name so each project gets its own tint.
+function hashHue(value: string): number {
+  let hash = 0;
+  for (const char of value) hash = (hash * 31 + char.charCodeAt(0)) % 360;
+  return hash;
+}
+
+const hue = hashHue(name);
+const bgTop = `hsl(${hue} 30% 15%)`;
+const bgBottom = `hsl(${hue} 45% 8%)`;
+const glow = `hsl(${hue} 75% 65%)`;
+
+const initials = name
+  .split(" ")
+  .filter(Boolean)
+  .slice(0, 2)
+  .map((part) => part[0]?.toUpperCase() ?? "")
+  .join("");
+
+// Unique ids so multiple placeholders on one page don't collide.
+const uid = Math.random().toString(36).slice(2, 8);
+---
+
+<svg
+  viewBox="0 0 320 180"
+  preserveAspectRatio="xMidYMid slice"
+  role="img"
+  aria-label={`Vista previa generada de ${name}`}
+  class:list={["block h-full w-full", className]}
+>
+  <defs>
+    <linearGradient id={`bg-${uid}`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color={bgTop}></stop>
+      <stop offset="1" stop-color={bgBottom}></stop>
+    </linearGradient>
+
+    <radialGradient id={`glow-${uid}`} cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color={glow} stop-opacity="0.35"></stop>
+      <stop offset="1" stop-color={glow} stop-opacity="0"></stop>
+    </radialGradient>
+
+    <pattern
+      id={`grid-${uid}`}
+      width="16"
+      height="16"
+      patternUnits="userSpaceOnUse"
+    >
+      <path
+        d="M16 0H0V16"
+        fill="none"
+        stroke={glow}
+        stroke-opacity="0.12"
+        stroke-width="1"></path>
+    </pattern>
+  </defs>
+
+  <!-- base + glow + blueprint grid -->
+  <rect width="320" height="180" fill={`url(#bg-${uid})`}></rect>
+  <rect width="320" height="180" fill={`url(#grid-${uid})`}></rect>
+  <rect width="320" height="180" fill={`url(#glow-${uid})`}></rect>
+
+  <!-- inner frame -->
+  <rect
+    x="10"
+    y="10"
+    width="300"
+    height="160"
+    fill="none"
+    stroke={glow}
+    stroke-opacity="0.25"></rect>
+
+  <!-- crop ticks -->
+  <path
+    d="M10 24V10H24 M296 10H310V24 M10 156V170H24 M296 170H310V156"
+    fill="none"
+    stroke={glow}
+    stroke-opacity="0.5"
+    stroke-width="1.5"></path>
+
+  <!-- initials -->
+  <text
+    x="160"
+    y="92"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    fill={glow}
+    font-family="var(--font-heading, sans-serif)"
+    font-size="72"
+    font-weight="700">{initials}</text>
+
+  <!-- project name -->
+  <text
+    x="160"
+    y="132"
+    text-anchor="middle"
+    fill="#ffffff"
+    fill-opacity="0.85"
+    font-family="var(--font-mono, monospace)"
+    font-size="11"
+    letter-spacing="2"
+    style="text-transform: uppercase;">{name}</text>
+
+  <!-- corner label -->
+  <text
+    x="18"
+    y="28"
+    fill="#ffffff"
+    fill-opacity="0.55"
+    font-family="var(--font-mono, monospace)"
+    font-size="8"
+    letter-spacing="1.5">SIN PORTADA</text>
+</svg>

@@ -1,0 +1,42 @@
+---
+import type { GetStaticPaths } from "astro";
+import MainLayout from "../../../components/layouts/main-layout.astro";
+import Section from "../../../components/atoms/section.astro";
+import PostCard from "../../../components/molecules/post-card.astro";
+import { getCurrentLocale } from "../../../i18n/utils";
+import { posts } from "../../../data/posts";
+
+export const prerender = true;
+
+export const getStaticPaths = (() => {
+  return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}) satisfies GetStaticPaths;
+
+const lang = getCurrentLocale(Astro);
+---
+
+<MainLayout title="Blog — Brahian Arias">
+  <main>
+    <Section class="flex-col items-start gap-12">
+      <div>
+        <a href={`/${lang}`} class="text-xs text-foreground/60 hover:text-accent">
+          ← Volver al inicio
+        </a>
+        <h1 class="mt-4 text-6xl">Mis pensamientos</h1>
+        <p class="mt-2 max-w-xl text-sm text-foreground/80">
+          Notas sobre back-end, inteligencia artificial, arquitectura y nube.
+        </p>
+      </div>
+
+      <ul class="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
+        {
+          posts.map((post) => (
+            <li class="h-full">
+              <PostCard post={post} lang={lang} />
+            </li>
+          ))
+        }
+      </ul>
+    </Section>
+  </main>
+</MainLayout>

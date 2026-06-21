@@ -1,0 +1,50 @@
+---
+import Section from "../../atoms/section.astro";
+import Button from "../../atoms/button.astro";
+import AsciiGlobe from "../../organisms/ascii-globe.astro";
+import MusicPlayer from "../../molecules/music-player.astro";
+import StripEffect from "@/components/organisms/strip-effect/strip-effect.astro";
+---
+
+<Section
+  class="bg-[linear-gradient(var(--color-background)_41%,#4a2c39_61%,var(--color-accent)_89%,#a8d7e0_125%)] items-start"
+>
+  <div class="relative z-10 flex flex-col gap-1 items-center mt-32">
+    <div class="flex flex-col items-center justify-center">
+      <h3
+        class="uppercase text-foreground/80 text-sm animate-fade-in [animation-delay:200ms]"
+      >
+        [00] Desarrollador IA, Cloud y Back-End
+      </h3>
+      <h1 class="uppercase text-[5rem] font-bold text-center animate-fade-in">
+        Brahian arias
+      </h1>
+    </div>
+
+    <p
+      class="uppercase text-sm animate-fade-in max-w-137.5 text-center text-foreground/80"
+    >
+      Desarrollo sistemas de Back-end, Cloud e inteligencia artifical que están
+      a la altura de las necesidades del mercado actual
+    </p>
+
+    <div class="flex flex-row items-center gap-3 mt-10">
+      <Button variant="primary" class="animate-fade-in">Ver proyectos</Button>
+      <Button variant="secondary" class="animate-fade-in">Contactar</Button>
+    </div>
+  </div>
+  <AsciiGlobe
+    class="text-xs animate-fade-in [animation-delay:400ms] absolute bottom-2"
+  />
+
+  <MusicPlayer
+    class="animate-fade-in [animation-delay:600ms]"
+    src="/music/track.mp3"
+    song="SoundHelix Song 1"
+    artist="T. Schürger"
+    album="SoundHelix Samples"
+    year="2010"
+  />
+</Section>
+
+<style></style>

@@ -1,0 +1,40 @@
+---
+/**
+ * post-card — a clickable blog post card linking to /<lang>/blog/<slug>.
+ * Shared by the home "Mis pensamientos" section and the /blog listing.
+ */
+import type { Post } from "../../data/posts";
+import { formatPostDate } from "../../data/posts";
+
+interface Props {
+  post: Post;
+  lang: string;
+}
+
+const { post, lang } = Astro.props;
+---
+
+<a
+  href={`/${lang}/blog/${post.slug}`}
+  class="group flex h-full flex-col gap-4 border border-foreground/15 p-6 transition duration-200 hover:border-accent/60 hover:shadow-lg hover:shadow-accent/10"
+>
+  <time datetime={post.date} class="text-xs uppercase tracking-wider text-foreground/60">
+    {formatPostDate(post.date, lang)}
+  </time>
+
+  <h3 class="text-2xl transition group-hover:text-accent">{post.title}</h3>
+
+  <p class="text-sm text-foreground/80">{post.excerpt}</p>
+
+  <ul class="mt-auto flex flex-wrap gap-2 pt-2">
+    {
+      post.tags.map((tag) => (
+        <li class="border border-foreground/20 px-2 py-1 text-[10px] uppercase tracking-wider text-foreground/70">
+          {tag}
+        </li>
+      ))
+    }
+  </ul>
+
+  <span class="text-xs text-accent">Leer más →</span>
+</a>

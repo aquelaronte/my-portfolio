@@ -1,0 +1,23 @@
+---
+import type { GetStaticPaths } from "astro";
+import IndexPage from "../../components/pages/index/index-page.astro";
+
+export const prerender = true;
+
+export const getStaticPaths = (() => {
+  return [
+    {
+      params: {
+        lang: "es",
+      },
+    },
+    {
+      params: {
+        lang: "en",
+      },
+    },
+  ];
+}) satisfies GetStaticPaths;
+---
+
+<IndexPage />

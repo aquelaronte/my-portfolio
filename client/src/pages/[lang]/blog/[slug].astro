@@ -1,0 +1,66 @@
+---
+import type { GetStaticPaths } from "astro";
+import MainLayout from "../../../components/layouts/main-layout.astro";
+import Section from "../../../components/atoms/section.astro";
+import { getCurrentLocale } from "../../../i18n/utils";
+import { posts, formatPostDate, type Post } from "../../../data/posts";
+
+export const prerender = true;
+
+export const getStaticPaths = (() => {
+  const langs = ["es", "en"];
+  return langs.flatMap((lang) =>
+    posts.map((post) => ({
+      params: { lang, slug: post.slug },
+      props: { post },
+    })),
+  );
+}) satisfies GetStaticPaths;
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const lang = getCurrentLocale(Astro);
+---
+
+<MainLayout title={`${post.title} — Brahian Arias`} description={post.excerpt}>
+  <main>
+    <Section class="flex-col items-start gap-8">
+      <article class="flex w-full max-w-2xl flex-col gap-8">
+        <div class="flex flex-col gap-4">
+          <a
+            href={`/${lang}/blog`}
+            class="text-xs text-foreground/60 hover:text-accent"
+          >
+            ← Todos los posts
+          </a>
+
+          <time
+            datetime={post.date}
+            class="text-xs uppercase tracking-wider text-foreground/60"
+          >
+            {formatPostDate(post.date, lang)}
+          </time>
+
+          <h1 class="text-5xl">{post.title}</h1>
+
+          <ul class="flex flex-wrap gap-2">
+            {
+              post.tags.map((tag) => (
+                <li class="border border-foreground/20 px-2 py-1 text-[10px] uppercase tracking-wider text-foreground/70">
+                  {tag}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="flex flex-col gap-4 text-foreground/90">
+          {post.body.map((paragraph) => <p class="leading-relaxed">{paragraph}</p>)}
+        </div>
+      </article>
+    </Section>
+  </main>
+</MainLayout>

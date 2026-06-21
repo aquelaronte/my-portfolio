@@ -1,0 +1,114 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<pre
+  id="ascii-globe"
+  aria-hidden="true"
+  class:list={[
+    "font-mono leading-[0.85] text-accent select-none whitespace-pre",
+    className,
+  ]}></pre>
+
+<script>
+  const pre = document.getElementById("ascii-globe");
+  if (pre) {
+    // Output grid. Monospace cells are ~2x taller than wide, so width is
+    // roughly double the height to keep the globe circular.
+    const W = 72;
+    const H = 36;
+
+    // Depth ramp: characters from far (dim) to near (bright).
+    const RAMP = " .:-=+*#%@";
+
+    const TILT = 0.42; // fixed lean so the poles are visible
+    const cosTilt = Math.cos(TILT);
+    const sinTilt = Math.sin(TILT);
+
+    // Pre-compute the globe's wireframe points (unit sphere, body frame).
+    const points: { x: number; y: number; z: number }[] = [];
+
+    const MERIDIANS = 12; // lines of longitude
+    const PARALLELS = 7; // lines of latitude (excluding poles)
+
+    for (let m = 0; m < MERIDIANS; m++) {
+      const lon = (m / MERIDIANS) * Math.PI * 2;
+      const cosLon = Math.cos(lon);
+      const sinLon = Math.sin(lon);
+      for (let lat = -Math.PI / 2; lat <= Math.PI / 2; lat += 0.04) {
+        const cosLat = Math.cos(lat);
+        points.push({
+          x: cosLat * cosLon,
+          y: Math.sin(lat),
+          z: cosLat * sinLon,
+        });
+      }
+    }
+
+    for (let p = 1; p <= PARALLELS; p++) {
+      const lat = -Math.PI / 2 + (p / (PARALLELS + 1)) * Math.PI;
+      const cosLat = Math.cos(lat);
+      const sinLat = Math.sin(lat);
+      for (let lon = 0; lon < Math.PI * 2; lon += 0.03) {
+        points.push({
+          x: cosLat * Math.cos(lon),
+          y: sinLat,
+          z: cosLat * Math.sin(lon),
+        });
+      }
+    }
+
+    const rx = W * 0.46; // horizontal radius in cells
+    const ry = H * 0.46; // vertical radius in cells
+
+    let angle = 0;
+
+    function render() {
+      const buffer = new Array(W * H).fill(" ");
+      const zbuffer = new Array(W * H).fill(-Infinity);
+
+      const cosA = Math.cos(angle);
+      const sinA = Math.sin(angle);
+
+      for (const pt of points) {
+        // spin around the Y axis
+        let x = pt.x * cosA + pt.z * sinA;
+        let z = -pt.x * sinA + pt.z * cosA;
+        let y = pt.y;
+
+        // fixed tilt around the X axis
+        const ty = y * cosTilt - z * sinTilt;
+        const tz = y * sinTilt + z * cosTilt;
+        y = ty;
+        z = tz;
+
+        const sx = Math.round(W / 2 + x * rx);
+        const sy = Math.round(H / 2 - y * ry);
+        if (sx < 0 || sx >= W || sy < 0 || sy >= H) continue;
+
+        const idx = sx + sy * W;
+        // larger z is closer to the viewer (+z points out of the screen)
+        if (z > zbuffer[idx]) {
+          zbuffer[idx] = z;
+          const shade = Math.floor(((z + 1) / 2) * (RAMP.length - 1));
+          buffer[idx] = RAMP[shade];
+        }
+      }
+
+      let out = "";
+      for (let row = 0; row < H; row++) {
+        out += buffer.slice(row * W, row * W + W).join("") + "\n";
+      }
+      pre!.textContent = out;
+
+      angle += 0.012;
+      requestAnimationFrame(render);
+    }
+
+    render();
+  }
+</script>

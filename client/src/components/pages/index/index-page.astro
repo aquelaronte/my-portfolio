@@ -1,0 +1,23 @@
+---
+import { useTranslations } from "../../../i18n/utils";
+import MainLayout from "../../layouts/main-layout.astro";
+import AboutMe from "./about-me.astro";
+import Blog from "./blog.astro";
+import Contact from "./contact.astro";
+import Hero from "./hero.astro";
+import Projects from "./projects.astro";
+import Testimonials from "./testimonials.astro";
+
+const t = useTranslations(Astro);
+---
+
+<MainLayout title={t("metadata.title")}>
+  <main>
+    <Hero />
+    <AboutMe />
+    <Projects />
+    <Testimonials />
+    <Blog />
+    <Contact />
+  </main>
+</MainLayout>

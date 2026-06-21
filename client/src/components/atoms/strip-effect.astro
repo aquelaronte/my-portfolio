@@ -1,0 +1,100 @@
+---
+/**
+ * strip-effect — 3D curling "tape" hero
+ * -------------------------------------
+ * A long flat strip wrapped onto a 3D curve that sweeps in from the lower-left,
+ * flattens to face the camera in the middle (the readable panel), then curls
+ * away. The strip surface shows a repeating multicolour BRAND reel, styled as
+ * 90s–2000s industrial retro-futurism. The ribbon sits BETWEEN two DOM type
+ * layers so the giant headline visually weaves over and under it.
+ *
+ * LAYERING (documented approach): everything is one stacking context.
+ *   - z-0   back type layer  — the full headline
+ *   - z-10  <canvas>         — the transparent WebGL ribbon
+ *   - z-20  front type layer — a clipped copy of the SAME headline, showing only
+ *           its lower portion, so the ribbon passes behind the tops of the
+ *           letters and in front of their feet → a woven look.
+ * The two type layers are positioned identically so the clipped front copy sits
+ * exactly over the back one. Corner blocks carry swiss/editorial metadata.
+ *
+ * The effect is configured entirely in ./strip-effect/config.ts (curve shape,
+ * brand art, animation, camera, shadow). See ./strip-effect/README.md.
+ */
+interface Props {
+  class?: string;
+  /** Giant display headline shown behind/around the ribbon. */
+  headline?: string;
+  /** Small kicker above the headline. */
+  kicker?: string;
+  /** Editorial metadata blocks for the four corners (placeholder by default). */
+  meta?: { tl?: string; tr?: string; bl?: string; br?: string };
+}
+
+const { class: className, headline = "RETRO\nFUTURE" } = Astro.props;
+
+const headlineLines = headline.split("\n");
+---
+
+<section
+  class:list={[
+    "strip-hero relative w-full min-h-screen overflow-hidden bg-[#f4f1ea] text-black select-none",
+    className,
+  ]}
+>
+  <!-- BACK type layer (full headline, z-0) -->
+  <h1
+    class="display-type back-type pointer-events-none absolute inset-0 z-0 flex flex-col items-center justify-center"
+  >
+    {headlineLines.map((line) => <span class="block">{line}</span>)}
+  </h1>
+
+  <!-- WebGL ribbon (z-10) -->
+  <canvas
+    id="strip-canvas"
+    class="absolute inset-0 z-10 h-full w-full"
+    aria-hidden="true"></canvas>
+
+  <!-- FRONT type layer (clipped copy, z-20) — creates the weave -->
+  <h1
+    aria-hidden="true"
+    class="display-type front-type pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center"
+  >
+    {headlineLines.map((line) => <span class="block">{line}</span>)}
+  </h1>
+</section>
+
+<style>
+  .display-type {
+    font-family: var(--font-heading, sans-serif);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 0.82;
+    letter-spacing: -0.01em;
+    /* Responsive giant display type. */
+    font-size: clamp(4.5rem, 22vw, 18rem);
+    color: #0a0a0a;
+  }
+
+  /* The front copy shows only its lower portion, so the ribbon weaves over the
+     tops of the letters and under their feet. Tune the inset to taste. */
+  .front-type {
+    clip-path: inset(52% 0 0 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Loop still runs (slowed in the scene), nothing to do here. */
+  }
+</style>
+
+<script>
+  import { initStripEffect } from "./strip-effect/scene";
+
+  const canvas = document.getElementById("strip-canvas");
+  if (canvas instanceof HTMLCanvasElement) {
+    const dispose = initStripEffect(canvas);
+
+    document.addEventListener("astro:before-swap", () => dispose(), {
+      once: true,
+    });
+  }
+</script>

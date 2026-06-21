@@ -1,0 +1,172 @@
+---
+import Section from "../../atoms/section.astro";
+import Button from "../../atoms/button.astro";
+
+// Destination inbox + social profiles — update the handles to your own.
+const EMAIL = "aquelaronte@gmail.com";
+
+const socials = [
+  {
+    icon: "linkedin",
+    label: "LinkedIn",
+    handle: "/in/brahian-arias",
+    href: "https://www.linkedin.com/in/brahian-arias",
+  },
+  {
+    icon: "github",
+    label: "GitHub",
+    handle: "@aquelaronte",
+    href: "https://github.com/aquelaronte",
+  },
+  {
+    icon: "mail",
+    label: "Email",
+    handle: EMAIL,
+    href: `mailto:${EMAIL}`,
+  },
+] as const;
+---
+
+<Section>
+  <div class="grid w-full grid-cols-1 gap-12 md:grid-cols-2 md:gap-16">
+    <!-- Left: intro + socials -->
+    <div class="flex flex-col gap-8">
+      <div>
+        <p class="text-accent text-xs">[05] Contacto</p>
+        <h3 class="text-5xl">Hablemos</h3>
+      </div>
+
+      <p class="max-w-sm text-sm text-foreground/80">
+        ¿Tienes un proyecto en mente o quieres trabajar juntos? Escríbeme y te
+        respondo lo antes posible.
+      </p>
+
+      <ul class="flex flex-col gap-4">
+        {
+          socials.map((social) => (
+            <li>
+              <a
+                href={social.href}
+                target={social.icon === "mail" ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                class="group flex items-center gap-4 text-sm transition hover:text-accent"
+              >
+                <span class="flex size-10 shrink-0 items-center justify-center border border-foreground/20 transition group-hover:border-accent/60">
+                  {social.icon === "linkedin" && (
+                    <svg
+                      viewBox="0 0 24 24"
+                      class="size-4 fill-current"
+                      aria-hidden="true"
+                    >
+                      <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C20.5 8.75 22 10.8 22 14.1V21h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.56-2.3 3.17V21H9V9Z" />
+                    </svg>
+                  )}
+                  {social.icon === "github" && (
+                    <svg
+                      viewBox="0 0 24 24"
+                      class="size-4 fill-current"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" />
+                    </svg>
+                  )}
+                  {social.icon === "mail" && (
+                    <svg
+                      viewBox="0 0 24 24"
+                      class="size-4 fill-none stroke-current"
+                      stroke-width="2"
+                      aria-hidden="true"
+                    >
+                      <rect x="3" y="5" width="18" height="14" rx="2" />
+                      <path d="m3 7 9 6 9-6" />
+                    </svg>
+                  )}
+                </span>
+
+                <span class="flex flex-col">
+                  <span class="text-xs uppercase tracking-wider text-foreground/60">
+                    {social.label}
+                  </span>
+                  <span>{social.handle}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Right: form -->
+    <form
+      data-contact-form
+      data-email={EMAIL}
+      class="flex flex-col gap-6"
+    >
+      <label class="flex flex-col gap-2">
+        <span class="text-xs uppercase tracking-wider text-foreground/60">
+          Nombre
+        </span>
+        <input
+          type="text"
+          name="name"
+          required
+          autocomplete="name"
+          placeholder="Tu nombre"
+          class="border border-foreground/20 bg-transparent px-4 py-3 text-sm outline-none transition placeholder:text-foreground/40 focus:border-accent"
+        />
+      </label>
+
+      <label class="flex flex-col gap-2">
+        <span class="text-xs uppercase tracking-wider text-foreground/60">
+          Asunto
+        </span>
+        <input
+          type="text"
+          name="subject"
+          required
+          placeholder="¿De qué quieres hablar?"
+          class="border border-foreground/20 bg-transparent px-4 py-3 text-sm outline-none transition placeholder:text-foreground/40 focus:border-accent"
+        />
+      </label>
+
+      <label class="flex flex-col gap-2">
+        <span class="text-xs uppercase tracking-wider text-foreground/60">
+          Mensaje
+        </span>
+        <textarea
+          name="message"
+          required
+          rows="5"
+          placeholder="Cuéntame los detalles..."
+          class="resize-none border border-foreground/20 bg-transparent px-4 py-3 text-sm outline-none transition placeholder:text-foreground/40 focus:border-accent"
+        ></textarea>
+      </label>
+
+      <Button variant="primary" class="self-start">Enviar mensaje</Button>
+    </form>
+  </div>
+</Section>
+
+<script>
+  // Build a prefilled mailto from the form fields and open the mail client.
+  const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const email = form.dataset.email ?? "";
+    const data = new FormData(form);
+    const name = String(data.get("name") ?? "").trim();
+    const subject = String(data.get("subject") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+
+    // Sign the message body with the sender's name.
+    const body = name ? `${message}\n\n— ${name}` : message;
+
+    const mailto = `mailto:${email}?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailto;
+  });
+</script>

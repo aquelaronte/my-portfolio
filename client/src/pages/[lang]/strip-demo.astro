@@ -1,0 +1,22 @@
+---
+/**
+ * /<lang>/strip-demo — standalone demo of the curling "tape" hero.
+ * Runs immediately with the live placeholder reel (zero art required).
+ * Lives under [lang] to respect the project's i18n routing.
+ */
+import type { GetStaticPaths } from "astro";
+import MainLayout from "../../components/layouts/main-layout.astro";
+import StripEffect from "../../components/atoms/strip-effect.astro";
+
+export const prerender = true;
+
+export const getStaticPaths = (() => {
+  return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}) satisfies GetStaticPaths;
+---
+
+<MainLayout title="Strip Effect — Demo">
+  <main>
+    <StripEffect />
+  </main>
+</MainLayout>

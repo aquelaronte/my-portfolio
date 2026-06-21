@@ -1,0 +1,17 @@
+<canvas
+  id="strip-canvas"
+  class="absolute inset-0 z-10 h-full w-full opacity-50"
+  aria-hidden="true"></canvas>
+
+<script>
+  import { initStripEffect } from "./scene";
+
+  const canvas = document.getElementById("strip-canvas");
+  if (canvas instanceof HTMLCanvasElement) {
+    const dispose = initStripEffect(canvas);
+
+    document.addEventListener("astro:before-swap", () => dispose(), {
+      once: true,
+    });
+  }
+</script>

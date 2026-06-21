@@ -1,0 +1,47 @@
+---
+import { Font } from "astro:assets";
+import { getCurrentLocale } from "../../i18n/utils";
+import "../../styles/global.css";
+
+interface Props {
+  title?: string;
+  index?: boolean;
+  description?: string;
+  canonical?: string;
+}
+
+const { title, description, index = false, canonical } = Astro.props;
+
+const pageUrl = canonical ?? Astro.url.href;
+const lang = getCurrentLocale(Astro);
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    {title && <title>{title}</title>}
+    {description && <meta name="description" content={description} />}
+
+    <!-- indexing -->
+    <meta
+      name="robots"
+      content={index
+        ? "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+        : "noindex, nofollow"}
+    />
+    <link rel="canonical" href={pageUrl} />
+
+    <!-- fonts -->
+    <Font cssVariable="--font-bebas-neue" preload />
+    <Font cssVariable="--font-space-mono" preload />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

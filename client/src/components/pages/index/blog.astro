@@ -1,0 +1,39 @@
+---
+import Section from "../../atoms/section.astro";
+import PostCard from "../../molecules/post-card.astro";
+import { getCurrentLocale } from "../../../i18n/utils";
+import { posts } from "../../../data/posts";
+
+const lang = getCurrentLocale(Astro);
+
+// Show up to three of the most recent posts on the home page.
+const latest = posts.slice(0, 3);
+
+const buttonBase =
+  "font-mono px-3 py-2 rounded-lg text-xs uppercase cursor-pointer transition duration-200 hover:scale-105 hover:shadow-lg hover:shadow-accent/20";
+const buttonSecondary =
+  "bg-background/60 text-foreground outline outline-foreground hover:bg-background/90";
+---
+
+<Section class="flex-col items-start gap-12">
+  <div class="flex w-full flex-wrap items-end justify-between gap-4">
+    <div>
+      <p class="text-accent text-xs">[04] Blog</p>
+      <h3 class="text-5xl">Mis pensamientos</h3>
+    </div>
+
+    <a href={`/${lang}/blog`} class:list={[buttonBase, buttonSecondary]}>
+      Ver más posts
+    </a>
+  </div>
+
+  <ul class="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
+    {
+      latest.map((post) => (
+        <li class="h-full">
+          <PostCard post={post} lang={lang} />
+        </li>
+      ))
+    }
+  </ul>
+</Section>

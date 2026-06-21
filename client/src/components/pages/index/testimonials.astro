@@ -1,0 +1,180 @@
+---
+import Section from "../../atoms/section.astro";
+
+interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+}
+
+// Two-letter initials from a name, e.g. "María Restrepo" -> "MR".
+function initials(name: string): string {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
+// Sample testimonials — replace with real quotes when available.
+const testimonials: Testimonial[] = [
+  {
+    quote:
+      "Diseñó una arquitectura robusta para nuestro SaaS desde cero. Ahora nuestros clientes nos felicitan por la velocidad de nuestro sistema.",
+    author: "Frank Smith Rivas",
+    role: "Co-Founder, Queron Technologies",
+  },
+  {
+    quote:
+      "Integró un sistema de IA en producción en tiempo récord. Pragmático, riguroso y siempre pensando en el negocio, no solo en el código.",
+    author: "Juan David Agudelo",
+    role: "CEO, Byte4Bit",
+  },
+  {
+    quote:
+      "Un profesional excepcional con la infraestructura en la nube. Dejó todo documentado y al equipo más autónomo de lo que estaba.",
+    author: "Cristian Bedoya",
+    role: "Desarrollador, Fundación ROFÉ",
+  },
+];
+---
+
+<Section class="overflow-hidden">
+  <div
+    data-testimonials
+    class="relative flex w-full flex-col items-start gap-12"
+  >
+    <!-- accent spark glow behind the cards, revealed when the section is in view -->
+    <div data-spark aria-hidden="true" class="spark"></div>
+
+    <div class="relative z-10">
+      <p class="text-accent text-xs">[03] Testimonios</p>
+      <h3 class="text-5xl">Lo que dicen de mi trabajo</h3>
+    </div>
+
+    <ul class="relative z-10 grid w-full grid-cols-1 gap-6 md:grid-cols-3">
+    {
+      testimonials.map((testimonial, index) => (
+        <li
+          data-card
+          style={`transition-delay:${index * 120}ms`}
+          class="card flex flex-col justify-between gap-8 border border-foreground/15 bg-background/40 p-6 backdrop-blur-md"
+        >
+          <p class="text-sm leading-relaxed text-foreground/90">
+            <span class="text-accent">“</span>
+            {testimonial.quote}
+            <span class="text-accent">”</span>
+          </p>
+
+          <div class="flex items-center gap-3">
+            <span
+              class="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent/20 text-xs text-accent"
+              aria-hidden="true"
+            >
+              {initials(testimonial.author)}
+            </span>
+
+            <div>
+              <p class="text-sm">{testimonial.author}</p>
+              <p class="text-xs text-foreground/60">{testimonial.role}</p>
+            </div>
+          </div>
+        </li>
+      ))
+    }
+    </ul>
+  </div>
+</Section>
+
+<style>
+  /* Accent spark — a soft radial glow that sits behind the cards. */
+  .spark {
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    width: 70%;
+    height: 65%;
+    transform: translate(-50%, -50%) scale(0.7);
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(
+      circle,
+      var(--color-accent) 0%,
+      color-mix(in srgb, var(--color-accent) 40%, transparent) 35%,
+      transparent 70%
+    );
+    opacity: 0;
+    filter: blur(110px);
+    transition:
+      opacity 1s ease-out,
+      transform 1.2s ease-out;
+  }
+
+  /* Cards start hidden and slightly lowered, then fade up in view. */
+  .card {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+  }
+
+  /* Revealed state, toggled by the IntersectionObserver. */
+  :global([data-testimonials].is-in-view) .spark {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(1);
+    animation: spark-pulse 5s ease-in-out 1s infinite;
+  }
+
+  :global([data-testimonials].is-in-view) .card {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes spark-pulse {
+    0%,
+    100% {
+      opacity: 0.45;
+    }
+    50% {
+      opacity: 0.65;
+    }
+  }
+
+  /* Respect reduced-motion: show everything, no movement or pulsing. */
+  @media (prefers-reduced-motion: reduce) {
+    .card,
+    .spark {
+      transition: none;
+    }
+    .spark {
+      animation: none;
+    }
+    :global([data-testimonials].is-in-view) .spark {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  // Reveal the spark + stagger the card fade-ins once the section scrolls in.
+  const section = document.querySelector("[data-testimonials]");
+
+  if (section) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in-view");
+            observer.unobserve(entry.target); // reveal once
+          }
+        }
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(section);
+  }
+</script>

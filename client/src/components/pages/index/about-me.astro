@@ -1,0 +1,72 @@
+---
+import Section from "../../atoms/section.astro";
+
+// Technologies I reach for first vs. ones I've also shipped with.
+const mainStack = ["Go", "Python", "TypeScript", "PostgreSQL", "GCP", "AWS"];
+const alsoWorkedWith = [
+  "React",
+  "Astro",
+  "Redis",
+  "Docker",
+  "Kubernetes",
+  "Java",
+  "gRPC",
+  "MongoDB",
+];
+---
+
+<Section class="grid grid-cols-[1fr_30%] gap-8">
+  <div>
+    <p class="text-accent text-xs">[01] ¿Quién soy?</p>
+    <h3 class="text-5xl">¡Hola!</h3>
+
+    <div class="mt-10 grid gap-2 text-sm">
+      <p>Soy Brahian Arias Roldán, un desarrollador de software de Colombia.</p>
+
+      <p>
+        En mi trayectoria profesional como desarrollador de software he podido
+        desempeñar roles muy variados, donde los destacados son tres y son en
+        los que dedico mi foco:
+
+        <ul class="list-disc pl-8">
+          <li>Desarrollo Back-End</li>
+          <li>Desarrollo de inteligencia artificial</li>
+          <li>Arquitectura de software, infraestructura y Cloud</li>
+        </ul>
+      </p>
+    </div>
+
+    <!-- My stack -->
+    <div class="mt-10 grid gap-4">
+      <p class="text-accent text-xs">Mi stack</p>
+
+      <div class="grid gap-2">
+        <p class="text-xs text-foreground/60">Principales</p>
+        <ul class="flex flex-wrap gap-2">
+          {
+            mainStack.map((tech) => (
+              <li class="border border-accent/60 px-2 py-1 text-[10px] uppercase tracking-wider text-accent">
+                {tech}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="grid gap-2">
+        <p class="text-xs text-foreground/60">También he trabajado con</p>
+        <ul class="flex flex-wrap gap-2">
+          {
+            alsoWorkedWith.map((tech) => (
+              <li class="border border-foreground/20 px-2 py-1 text-[10px] uppercase tracking-wider text-foreground/70">
+                {tech}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div></div>
+</Section>
